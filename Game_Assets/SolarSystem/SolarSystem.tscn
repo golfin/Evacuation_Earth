@@ -1,0 +1,570 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://Game_Assets/SolarSystem/SolarSystem.gd" type="Script" id=1]
+[ext_resource path="res://Game_Assets/SolarSystem/UI.gd" type="Script" id=2]
+[ext_resource path="res://Art_Assets/UI/MainDialogBox.png" type="Texture" id=3]
+[ext_resource path="res://Game_Assets/SolarSystem/OutputBox.gd" type="Script" id=4]
+[ext_resource path="res://Game_Assets/SolarSystem/Output.gd" type="Script" id=5]
+[ext_resource path="res://Game_Assets/Fonts/slkscre.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Art_Assets/UI/MenuRightArrow.png" type="Texture" id=7]
+[ext_resource path="res://Game_Assets/Fonts/slikscreen_16.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Art_Assets/UI/LowerPanel.png" type="Texture" id=9]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/planet.png" type="Texture" id=10]
+[ext_resource path="res://Game_Assets/SolarSystem/Statistics.gd" type="Script" id=11]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani0.png" type="Texture" id=12]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani1.png" type="Texture" id=13]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani2.png" type="Texture" id=14]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani3.png" type="Texture" id=15]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani4.png" type="Texture" id=16]
+[ext_resource path="res://Art_Assets/UI/start_ani/start_ani5.png" type="Texture" id=17]
+[ext_resource path="res://Game_Assets/SolarSystem/OutputText.gd" type="Script" id=18]
+[ext_resource path="res://Art_Assets/UI/BounceArrow.png" type="Texture" id=19]
+[ext_resource path="res://Game_Assets/SolarSystem/Viewport.gd" type="Script" id=20]
+[ext_resource path="res://Art_Assets/Background/Sky/black_background.png" type="Texture" id=21]
+[ext_resource path="res://Art_Assets/Background/Sky/StarField.png" type="Texture" id=22]
+[ext_resource path="res://Game_Assets/SolarSystem/CelestialBodies.gd" type="Script" id=23]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/Sun.png" type="Texture" id=24]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/Mercury.png" type="Texture" id=25]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/Venus.png" type="Texture" id=26]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/Earth.png" type="Texture" id=27]
+[ext_resource path="res://Art_Assets/Celestial_Bodies/Mars.png" type="Texture" id=28]
+[ext_resource path="res://Game_Assets/SolarSystem/BackgroundMusic.gd" type="Script" id=29]
+[ext_resource path="res://Game_Assets/Music/Jack Hertz - 7.83 Hz - 01 Earth.ogg" type="AudioStream" id=30]
+[ext_resource path="res://Game_Assets/Music/effects/beep.wav" type="AudioStream" id=31]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+font_data = ExtResource( 6 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ],
+"loop": false,
+"name": "Start",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 17 ) ],
+"loop": false,
+"name": "Idle",
+"speed": 0.0
+} ]
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 6 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Arrow_Bounce"
+tracks/0/type = "value"
+tracks/0/path = NodePath("arrowBounceSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="SolarSystem" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 2 )
+
+[node name="OutputBox" type="Sprite" parent="UI"]
+texture = ExtResource( 3 )
+centered = false
+vframes = 2
+hframes = 2
+script = ExtResource( 4 )
+
+[node name="Menu" type="MarginContainer" parent="UI"]
+editor/display_folded = true
+margin_left = 360.0
+margin_top = 47.0
+margin_right = 711.0
+margin_bottom = 475.0
+script = ExtResource( 5 )
+
+[node name="ListContainer" type="VBoxContainer" parent="UI/Menu"]
+editor/display_folded = true
+margin_right = 351.0
+margin_bottom = 428.0
+custom_constants/separation = 10
+
+[node name="MenuTitle" type="MarginContainer" parent="UI/Menu/ListContainer"]
+editor/display_folded = true
+margin_right = 351.0
+margin_bottom = 17.0
+
+[node name="MenuTitleText" type="Label" parent="UI/Menu/ListContainer/MenuTitle"]
+margin_right = 351.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 1 )
+align = 1
+
+[node name="MenuArea" type="MarginContainer" parent="UI/Menu/ListContainer"]
+editor/display_folded = true
+margin_top = 27.0
+margin_right = 351.0
+margin_bottom = 149.0
+size_flags_horizontal = 3
+
+[node name="MenuList" type="VBoxContainer" parent="UI/Menu/ListContainer/MenuArea"]
+margin_right = 351.0
+margin_bottom = 122.0
+
+[node name="ResearchRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_right = 351.0
+margin_bottom = 17.0
+
+[node name="arrowCon" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/ResearchRow"]
+editor/display_folded = true
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/ResearchRow/arrowCon"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="textCon" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/ResearchRow"]
+editor/display_folded = true
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResearchLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/ResearchRow/textCon"]
+margin_right = 174.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+text = "research"
+
+[node name="BuildRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_top = 21.0
+margin_right = 351.0
+margin_bottom = 38.0
+
+[node name="BuildArrow" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/BuildRow"]
+editor/display_folded = true
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/BuildRow/BuildArrow"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="BuildText" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/BuildRow"]
+editor/display_folded = true
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BuildLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/BuildRow/BuildText"]
+margin_right = 174.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 8 )
+text = "Build"
+
+[node name="TerraRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_top = 42.0
+margin_right = 351.0
+margin_bottom = 59.0
+
+[node name="TerraArrow" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/TerraRow"]
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/TerraRow/TerraArrow"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="TerraText" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/TerraRow"]
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TerraLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/TerraRow/TerraText"]
+margin_right = 174.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+text = "Terraform"
+
+[node name="QuellRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_top = 63.0
+margin_right = 351.0
+margin_bottom = 80.0
+
+[node name="QuellArrow" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/QuellRow"]
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/QuellRow/QuellArrow"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="QuellText" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/QuellRow"]
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="QuellLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/QuellRow/QuellText"]
+margin_right = 174.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+text = "Quell"
+
+[node name="HolidayRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_top = 84.0
+margin_right = 351.0
+margin_bottom = 101.0
+
+[node name="HolidayArrow" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/HolidayRow"]
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/HolidayRow/HolidayArrow"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="HolidayText" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/HolidayRow"]
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HolidayLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/HolidayRow/HolidayText"]
+margin_right = 174.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+text = "Holiday"
+
+[node name="FinishRow" type="HBoxContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList"]
+editor/display_folded = true
+margin_top = 105.0
+margin_right = 351.0
+margin_bottom = 122.0
+
+[node name="FinishArrow" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/FinishRow"]
+margin_right = 173.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="arrowPic" type="TextureRect" parent="UI/Menu/ListContainer/MenuArea/MenuList/FinishRow/FinishArrow"]
+margin_right = 173.0
+margin_bottom = 17.0
+texture = ExtResource( 7 )
+
+[node name="FinishText" type="MarginContainer" parent="UI/Menu/ListContainer/MenuArea/MenuList/FinishRow"]
+margin_left = 177.0
+margin_right = 351.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FinishLabel" type="Label" parent="UI/Menu/ListContainer/MenuArea/MenuList/FinishRow/FinishText"]
+margin_right = 174.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+text = "Finish"
+
+[node name="LowerPanel" type="MarginContainer" parent="UI/Menu/ListContainer"]
+editor/display_folded = true
+margin_top = 159.0
+margin_right = 351.0
+margin_bottom = 428.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LowerPanelBackground" type="NinePatchRect" parent="UI/Menu/ListContainer/LowerPanel"]
+margin_right = 351.0
+margin_bottom = 269.0
+texture = ExtResource( 9 )
+
+[node name="Planet" type="Sprite" parent="UI/Menu/ListContainer/LowerPanel"]
+position = Vector2( 183.69, 133.313 )
+texture = ExtResource( 10 )
+vframes = 4
+hframes = 4
+
+[node name="Statistics" type="MarginContainer" parent="UI"]
+editor/display_folded = true
+margin_left = 6.0
+margin_top = 248.0
+margin_right = 357.0
+margin_bottom = 475.0
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StatBox" type="VBoxContainer" parent="UI/Statistics"]
+margin_right = 351.0
+margin_bottom = 227.0
+
+[node name="StatTitle" type="MarginContainer" parent="UI/Statistics/StatBox"]
+editor/display_folded = true
+margin_right = 351.0
+margin_bottom = 26.0
+
+[node name="StatTitleText" type="Label" parent="UI/Statistics/StatBox/StatTitle"]
+margin_right = 351.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+align = 1
+
+[node name="StatsTable" type="GridContainer" parent="UI/Statistics/StatBox"]
+editor/display_folded = true
+margin_top = 30.0
+margin_right = 351.0
+margin_bottom = 173.0
+
+[node name="Year" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_bottom = 17.0
+
+[node name="YearLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/Year"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="Population" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 21.0
+margin_bottom = 38.0
+
+[node name="PopLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/Population"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="HabitatLevel" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 42.0
+margin_bottom = 59.0
+
+[node name="HabLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/HabitatLevel"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="NumColonies" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 63.0
+margin_bottom = 80.0
+
+[node name="ColLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/NumColonies"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="GovSystem" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 84.0
+margin_bottom = 101.0
+
+[node name="GovLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/GovSystem"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="HappyLvl" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 105.0
+margin_bottom = 122.0
+
+[node name="HappyLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/HappyLvl"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="EngineLvl" type="MarginContainer" parent="UI/Statistics/StatBox/StatsTable"]
+margin_top = 126.0
+margin_bottom = 143.0
+
+[node name="EnginLabel" type="Label" parent="UI/Statistics/StatBox/StatsTable/EngineLvl"]
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 8 )
+
+[node name="StartingAni" type="AnimatedSprite" parent="UI"]
+frames = SubResource( 3 )
+animation = "Idle"
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="OutputText" type="Node2D" parent="UI"]
+editor/display_folded = true
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="OutputText" type="MarginContainer" parent="UI/OutputText"]
+editor/display_folded = true
+margin_left = 372.0
+margin_top = 78.0
+margin_right = 692.0
+margin_bottom = 469.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="UI/OutputText/OutputText"]
+margin_right = 320.0
+margin_bottom = 391.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+text = "
+"
+
+[node name="arrowBounce" type="MarginContainer" parent="UI/OutputText"]
+margin_left = 690.912
+margin_top = 456.546
+margin_right = 710.912
+margin_bottom = 474.546
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="arrowBounceSprite" type="Sprite" parent="UI/OutputText/arrowBounce"]
+texture = ExtResource( 19 )
+centered = false
+vframes = 2
+frame = 1
+
+[node name="arrowBouncePlayer" type="AnimationPlayer" parent="UI/OutputText/arrowBounce"]
+anims/Arrow_Bounce = SubResource( 5 )
+
+[node name="Viewport" type="Node2D" parent="."]
+script = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Background" type="Sprite" parent="Viewport"]
+scale = Vector2( 0.5, 0.518181 )
+texture = ExtResource( 21 )
+centered = false
+
+[node name="StarField" type="Sprite" parent="Viewport"]
+scale = Vector2( 0.5, 0.572202 )
+texture = ExtResource( 22 )
+centered = false
+
+[node name="CelestialBodies" type="Node" parent="Viewport"]
+editor/display_folded = true
+script = ExtResource( 23 )
+
+[node name="Sun" type="Node" parent="Viewport/CelestialBodies"]
+editor/display_folded = true
+
+[node name="SunSprite" type="Sprite" parent="Viewport/CelestialBodies/Sun"]
+position = Vector2( 45, 125 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 24 )
+vframes = 2
+hframes = 2
+frame = 1
+
+[node name="SunPlayer" type="AnimationPlayer" parent="Viewport/CelestialBodies/Sun"]
+anims/Idle = SubResource( 6 )
+
+[node name="Mercury" type="Node" parent="Viewport/CelestialBodies"]
+editor/display_folded = true
+
+[node name="MercurySprite" type="Sprite" parent="Viewport/CelestialBodies/Mercury"]
+position = Vector2( 110, 125 )
+texture = ExtResource( 25 )
+
+[node name="Venus" type="Node" parent="Viewport/CelestialBodies"]
+editor/display_folded = true
+
+[node name="VenusSprite" type="Sprite" parent="Viewport/CelestialBodies/Venus"]
+position = Vector2( 150, 125 )
+texture = ExtResource( 26 )
+
+[node name="Earth" type="Node" parent="Viewport/CelestialBodies"]
+editor/display_folded = true
+
+[node name="EarthSprite" type="Sprite" parent="Viewport/CelestialBodies/Earth"]
+position = Vector2( 190, 125 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 27 )
+vframes = 3
+hframes = 2
+
+[node name="Mars" type="Node" parent="Viewport/CelestialBodies"]
+editor/display_folded = true
+
+[node name="MarsSprite" type="Sprite" parent="Viewport/CelestialBodies/Mars"]
+position = Vector2( 230, 125 )
+texture = ExtResource( 28 )
+
+[node name="Sound" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="BackgroundMusic" type="Node" parent="Sound"]
+script = ExtResource( 29 )
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Sound/BackgroundMusic"]
+stream = ExtResource( 30 )
+volume_db = -80.0
+autoplay = true
+
+[node name="Tween" type="Tween" parent="Sound/BackgroundMusic"]
+
+[node name="BeepSound" type="Node" parent="Sound"]
+editor/display_folded = true
+
+[node name="BeepPlayer" type="AudioStreamPlayer" parent="Sound/BeepSound"]
+stream = ExtResource( 31 )
+volume_db = -30.0
+[connection signal="animation_finished" from="UI/StartingAni" to="UI" method="_on_StartingAni_animation_finished"]
+[connection signal="textFinished" from="UI/OutputText" to="UI" method="_on_OutputText_textFinished"]
+[connection signal="allPlanetsStopped" from="Viewport/CelestialBodies" to="UI" method="_on_CelestialBodies_allPlanetsStopped"]
